@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Intermediate JavaScript Demo App</title>
+		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="css/site.css" rel="stylesheet">
+		<base href="/">
+	</head>
+
+	<body>
+		<main>
+			<button id="my-button">Click!</button>
+		</main>
+		<script src="js/jquery/jquery-3.1.1.min.js"></script>
+		<script src="js/ng/angular.min.js"></script>
+		<script>
+
+			'use strict';
+
+			var p = { parentProp: 'd' };
+
+			var a = Object.create(p);
+			a.prop1 = '1';
+			a.prop2 = '2';
+			a.prop3 = {};
+
+			Object.freeze(a);
+
+			var c = {
+				prop1: '500',
+				prop4: 'ggg'
+			};
+
+			var b = {};
+
+			// Object.assign(b, a, c);
+
+			// console.dir(b);
+
+			// b.prop1 = '3';
+
+			// console.log(b.prop3 === a.prop3);
+
+			// for (var prop in a) {
+			// 	if (a.hasOwnProperty(prop)) {
+			// 		console.log(prop);
+			// 	}
+			// }
+
+			// console.log(Object.keys(a));
+			// console.log(Object.values(a));
+			// console.log(Object.entries(a));
+
+
+			function myAssign(dest, ...src) {
+				src.forEach(o => Object.keys(o).forEach(prop => dest[prop] = o[prop]));
+				return dest;
+			}
+
+			console.log(myAssign(b, a, c));
+
+
+
+
+		</script>
+
+	</body>
+
+</html>
