@@ -21,26 +21,71 @@
 		<script>
 
 			angular.module("MyApp", [])
+				.filter('test', function() {
+					return function(value) {
+						console.log('filter executed');
+						return value;
+					};
+				})
 				.component("colorTool", {
-				
 					template: `
 						<header>
 							<h1>{{$ctrl.caption}}<h1>
 						</header>
 						<ul>
-							<li ng-repeat="color in $ctrl.colors">
+							<li ng-repeat="color in $ctrl.sortedColors">
 								{{color}}
 							</li>
 						</ul>
+						<form>
+							<div>
+								<label>New Color</label>
+								<input type="text" id="new-color" name="newColor" ng-model="$ctrl.newColor">
+								<button type="button" ng-click="$ctrl.addColor()">Add Color</button>
+							</div>
+						</form>
 					`,
-					controller: function() {
+					controller: function($scope, $timeout) {
+
+						var lastColors = null;
+
+						var vm = this;
 
 						this.caption = 'Color List';
-
 						this.colors = ['red','green','white','blue'];
 
+						Object.defineProperty(this, 'sortedColors', {
+							configurable: true,
+							enumerable: true,
+							get: function() {
+
+								if (lastColors !== this.colors) {
+									console.log('sorting colors');
+									this.colors.sort();
+									lastColors = this.colors;
+								}
+
+								return lastColors;
+
+							}
+						});
+
+						vm.addColor = function() {
+							vm.colors = vm.colors.concat(vm.newColor);
+							//vm.colors.push(vm.newColor);
+							vm.newColor = '';
+						};
+
+						// $timeout(function() {
+						// 	console.log('timeout expired');
+						// 	vm.caption = 'Colors are cool!';
+
+						// 	//$scope.$digest();
+						// 	$scope.$apply();
+
+						// 	console.log($scope);
+						// }, 2000);
 					}
-				
 				});
 
 			// $scope.$ctrl = new ColorListCtrl();
