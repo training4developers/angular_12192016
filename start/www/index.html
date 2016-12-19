@@ -14,20 +14,22 @@
 
 	<body>
 		<main ng-app="MyApp">
-			<color-tool></color-tool>
+			<h1>Master Color List</h1>
+			<ul>
+				<li ng-repeat="color in colors">{{color}}</li>
+			</ul>
+			<color-tool caption="caption" colors="colors"></color-tool>
 		</main>
 		<script src="js/jquery/jquery-3.1.1.min.js"></script>
 		<script src="js/ng/angular.min.js"></script>
 		<script>
 
 			angular.module("MyApp", [])
-				.filter('test', function() {
-					return function(value) {
-						console.log('filter executed');
-						return value;
-					};
-				})
 				.component("colorTool", {
+					bindings: {
+						caption: '<',
+						colors: '<'
+					},
 					template: `
 						<header>
 							<h1>{{$ctrl.caption}}<h1>
@@ -48,21 +50,21 @@
 					controller: function($scope, $timeout) {
 
 						var lastColors = null;
-
 						var vm = this;
 
-						this.caption = 'Color List';
-						this.colors = ['red','green','white','blue'];
+						vm.$onInit = function() {
+							vm.myColors = vm.colors.concat();
+						};
 
-						Object.defineProperty(this, 'sortedColors', {
+						Object.defineProperty(vm, 'sortedColors', {
 							configurable: true,
 							enumerable: true,
 							get: function() {
 
-								if (lastColors !== this.colors) {
+								if (lastColors !== vm.myColors) {
 									console.log('sorting colors');
-									this.colors.sort();
-									lastColors = this.colors;
+									vm.myColors.sort();
+									lastColors = vm.myColors;
 								}
 
 								return lastColors;
@@ -71,32 +73,18 @@
 						});
 
 						vm.addColor = function() {
-							vm.colors = vm.colors.concat(vm.newColor);
-							//vm.colors.push(vm.newColor);
+							vm.myColors = vm.myColors.concat(vm.newColor);
 							vm.newColor = '';
 						};
 
-						// $timeout(function() {
-						// 	console.log('timeout expired');
-						// 	vm.caption = 'Colors are cool!';
-
-						// 	//$scope.$digest();
-						// 	$scope.$apply();
-
-						// 	console.log($scope);
-						// }, 2000);
 					}
+				})
+				.run(function($rootScope) {
+				
+					$rootScope.caption = "Color List";
+					$rootScope.colors = ['red','green','white','blue'];
+		
 				});
-
-			// $scope.$ctrl = new ColorListCtrl();
-			// $scope.$ctrl.caption => 'Color List';
-
-			// function Person(firstName, lastName) {
-			// 	this.firstName = firstName;
-			// 	this.lastName = lastName;
-			// }
-
-			// var p = new Person('Bob','Smith');
 
 		</script>
 	</body>

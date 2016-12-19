@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Welcome to Angular.js Class!</title>
+		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/site.css" rel="stylesheet">
+		<base href="/">
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<script>
+
+			'use strict';
+
+			function doIt() {
+				//console.log(this);
+
+			 	var that = this;
+
+				// function inner() {
+				// 	console.log(that);
+				// }
+
+				var inner = () => console.log(this);
+
+				inner();
+			}
+
+			//doIt();
+
+			//window.doIt();
+
+			var o = {
+				id: 2,
+				doIt: doIt
+			};
+
+			o.doIt();
+
+			// console.log(o.doIt === doIt);
+
+			// var t = new doIt();
+
+			// setTimeout(o.doIt, 2000);
+
+
+		</script>
+	</body>
+
+</html>
