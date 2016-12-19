@@ -3,17 +3,57 @@
 <html>
 
 	<head>
-		<title>Intermediate JavaScript Demo App</title>
+		<title>Welcome to Angular.js Class!</title>
 		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/site.css" rel="stylesheet">
 		<base href="/">
+		<style>
+		</style>
 	</head>
 
 	<body>
-		<main></main>
+		<main ng-app="MyApp">
+			<color-tool></color-tool>
+		</main>
 		<script src="js/jquery/jquery-3.1.1.min.js"></script>
 		<script src="js/ng/angular.min.js"></script>
+		<script>
+
+			angular.module("MyApp", [])
+				.component("colorTool", {
+				
+					template: `
+						<header>
+							<h1>{{$ctrl.caption}}<h1>
+						</header>
+						<ul>
+							<li ng-repeat="color in $ctrl.colors">
+								{{color}}
+							</li>
+						</ul>
+					`,
+					controller: function() {
+
+						this.caption = 'Color List';
+
+						this.colors = ['red','green','white','blue'];
+
+					}
+				
+				});
+
+			// $scope.$ctrl = new ColorListCtrl();
+			// $scope.$ctrl.caption => 'Color List';
+
+			// function Person(firstName, lastName) {
+			// 	this.firstName = firstName;
+			// 	this.lastName = lastName;
+			// }
+
+			// var p = new Person('Bob','Smith');
+
+		</script>
 	</body>
 
 </html>

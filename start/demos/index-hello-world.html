@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Welcome to Angular.js Class!</title>
+		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/site.css" rel="stylesheet">
+		<base href="/">
+		<style>
+
+			.ng-scope {
+				border: 3px solid red;
+				margin:5px;
+				padding:5px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<main ng-app="MyApp">
+			Root Scope ID: {{$id}}<br>
+			Message: {{message}}
+			<div ng-controller="MyCtrl">
+				Scope ID: {{$id}}<br>
+				Message: {{message}}
+			</div>
+		</main>
+		<script src="js/jquery/jquery-3.1.1.min.js"></script>
+		<script src="js/ng/angular.min.js"></script>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope, $rootScope) {
+
+					$rootScope.message = "Hello World!";
+
+					console.log(Object.getPrototypeOf($scope) === $rootScope);
+
+				});
+
+		</script>
+	</body>
+
+</html>
