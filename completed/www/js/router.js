@@ -12,23 +12,19 @@
 		$stateProvider
 			.state("home", {
 				url: "/",
-				controller: "homeCtrl",
-				templateUrl: "tpls/home.html"
+				template: "<app-home></app-home>"
 			})
 			.state("create", {
 				url: "/widgets/create",
-				controller: "widgetEditCtrl",
-				templateUrl: "tpls/widget-edit.html"
+				template: "<widget-edit></widget-edit>"
 			})
 			.state("view", {
 				url: "/widgets/:widgetId",
-				controller: "widgetViewCtrl",
-				templateUrl: "tpls/widget-view.html"
+				template: "<widget-view></widget-view>"
 			})
 			.state("edit", {
 				url: "/widgets/:widgetId/edit",
-				controller: "widgetEditCtrl",
-				templateUrl: "tpls/widget-edit.html"
+				template: "<widget-edit></widget-edit>"
 			});
 
 	}

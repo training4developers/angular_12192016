@@ -2,19 +2,25 @@
 
 	"use strict";
 
-	controller.$inject = ["$scope", "widgets", "$state"];
+	controller.$inject = ["widgets", "$state"];
 
-	function controller($scope, widgets, $state) {
+	function controller(widgets, $state) {
 
-		widgets.get($state.params.widgetId).then(function(results) {
-			$scope.widget = results.data;
-		});
+		var vm = this;
 
-		$scope.editWidget = function(widgetId) {
+		vm.$onInit = function() {
+		
+			widgets.get($state.params.widgetId).then(function(results) {
+				vm.widget = results.data;
+			});
+
+		};
+
+		vm.editWidget = function(widgetId) {
 			$state.go("edit", { widgetId: widgetId });
 		};
 
-		$scope.returnToList = function() {
+		vm.returnToList = function() {
 			$state.go("home");
 		};
 	}

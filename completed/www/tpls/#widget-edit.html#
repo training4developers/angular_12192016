@@ -24,7 +24,7 @@
 		<label>Quantity: <input type="number" ng-model="$ctrl.widget.quantity"></label>
 	</div>
 
-	<button class="btn btn-primary" ng-click="$ctrl.saveWidget($ctrl.widget)">Save Widget</button>
+Save Widget
 	<button class="btn btn-danger" ng-if="$ctrl.widget.id" ng-click="$ctrl.deleteWidget($ctrl.widget.id)">Delete Widget</button>
 	<button class="btn btn-default" ng-click="$ctrl.returnToList()">Return to List</button>
 

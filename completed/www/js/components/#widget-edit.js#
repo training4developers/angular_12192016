@@ -1,0 +1,12 @@
+(function(angular) {
+
+	'use strict';
+
+	angular.module('WidgetApp.Components')
+		.component('widgetEdit', {
+			controller: 'widgetEditCtrl',
+			templateUrl: '../..L/tpls/widget-edit.html'
+		});
+
+
+})(angular);

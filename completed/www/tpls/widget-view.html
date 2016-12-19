@@ -1,12 +1,12 @@
 <div>
 
-	<div>Name: {{widget.name}}</div>
-	<div>Description: {{widget.description}}</div>
-	<div>Color: {{widget.color}}</div>
-	<div>Size: {{widget.size}}</div>
-	<div>Quantity: {{widget.quantity}}</div>
+	<div>Name: {{$ctrl.widget.name}}</div>
+	<div>Description: {{$ctrl.widget.description}}</div>
+	<div>Color: {{$ctrl.widget.color}}</div>
+	<div>Size: {{$ctrl.widget.size}}</div>
+	<div>Quantity: {{$ctrl.widget.quantity}}</div>
 
-	<button class="btn btn-primary" ng-click="editWidget(widget.id)">Edit Widget</button>
-	<button class="btn btn-default" ng-click="returnToList()">Return to List</button>
+	<button class="btn btn-primary" ng-click="$ctrl.editWidget($ctrl.widget.id)">Edit Widget</button>
+	<button class="btn btn-default" ng-click="$ctrl.returnToList()">Return to List</button>
 
 </div>

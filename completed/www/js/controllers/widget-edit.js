@@ -2,15 +2,21 @@
 
 	"use strict";
 
-	controller.$inject = ["$scope", "widgets", "$state"];
+	controller.$inject = ["widgets", "$state"];
 
-	function controller($scope, widgets, $state) {
+	function controller(widgets, $state) {
 
-		widgets.get($state.params.widgetId).then(function(results) {
-			$scope.widget = results.data;
-		});
+		var vm = this;
 
-		$scope.colors = [
+		vm.$onInit = function() {
+		
+			widgets.get($state.params.widgetId).then(function(results) {
+				vm.widget = results.data;
+			});
+
+		};
+
+		vm.colors = [
 			{ value: "red", label: "Red" },
 			{ value: "blue", label: "Blue" },
 			{ value: "green", label: "Green" },
@@ -19,7 +25,7 @@
 			{ value: "purple", label: "Purple" }
 		];
 
-		$scope.sizes = [
+		vm.sizes = [
 			{ value: "tiny", label: "Tiny" },
 			{ value: "small", label: "Small" },
 			{ value: "medium", label: "Medium" },
@@ -27,13 +33,13 @@
 			{ value: "huge", label: "Huge" }
 		];
 
-		$scope.saveWidget = function(widget) {
+		vm.saveWidget = function(widget) {
 			($state.params.widgetId ? widgets.update(widget) : widgets.insert(widget)).then(function() {
 				$state.go("home");
 			});
 		};
 
-		$scope.deleteWidget = function(widgetId) {
+		vm.deleteWidget = function(widgetId) {
 			if (confirm("Are you sure you want to delete the widget?")) {
 				widgets.delete(widgetId).then(function() {
 					$state.go("home");
@@ -41,7 +47,7 @@
 			}
 		};
 
-		$scope.returnToList = function() {
+		vm.returnToList = function() {
 			$state.go("home");
 		};
 	}
