@@ -18,7 +18,8 @@
 			<ul>
 				<li ng-repeat="color in colors">{{color}}</li>
 			</ul>
-			<color-tool caption="caption" colors="colors"></color-tool>
+			<input type="checkbox" ng-model="showMe"> Show Me
+			<color-tool ng-if="showMe" caption="caption" colors="colors" added-color="addNewColor(newColor)"></color-tool>
 		</main>
 		<script src="js/jquery/jquery-3.1.1.min.js"></script>
 		<script src="js/ng/angular.min.js"></script>
@@ -28,7 +29,8 @@
 				.component("colorTool", {
 					bindings: {
 						caption: '<',
-						colors: '<'
+						colors: '<',
+						addedColor: '&'
 					},
 					template: `
 						<header>
@@ -53,7 +55,24 @@
 						var vm = this;
 
 						vm.$onInit = function() {
-							vm.myColors = vm.colors.concat();
+							//console.log('I am being created!');
+							//vm.myColors = vm.colors.concat();
+						};
+
+						vm.$onChanges = function(changes) {
+
+							if (changes['colors']) {
+								vm.myColors = vm.colors.concat();
+							}
+
+						};
+
+						vm.$doCheck = function() {
+							//console.log('do check');
+						};
+
+						vm.$onDestroy = function() {
+							//console.log('I am being destroyed!');
 						};
 
 						Object.defineProperty(vm, 'sortedColors', {
@@ -73,16 +92,28 @@
 						});
 
 						vm.addColor = function() {
-							vm.myColors = vm.myColors.concat(vm.newColor);
+							console.log('add color was called');
+							vm.addedColor({ newColor: vm.newColor });
+							// vm.myColors = vm.myColors.concat(vm.newColor);
 							vm.newColor = '';
 						};
 
 					}
 				})
-				.run(function($rootScope) {
+				.run(function($rootScope, $timeout) {
 				
 					$rootScope.caption = "Color List";
 					$rootScope.colors = ['red','green','white','blue'];
+					$rootScope.showMe = true;
+
+					$rootScope.addNewColor = function(newColor) {
+						console.log('called add new color');
+						$rootScope.colors = $rootScope.colors.concat(newColor);
+					};
+
+					// $timeout(function() {
+					// 	$rootScope.colors = $rootScope.colors.concat('hot pink');
+					// }, 5000);
 		
 				});
 
