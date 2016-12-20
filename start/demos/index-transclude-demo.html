@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Welcome to Angular.js Class!</title>
+		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/site.css" rel="stylesheet">
+		<base href="/">
+		<script src="js/jquery/jquery-3.1.1.min.js"></script>
+		<script src="js/ng/angular.min.js"></script>
+	</head>
+
+	<body class="container-fluid">
+		<main ng-app="ColorToolApp" class="row" ng-controller="AppCtrl as vm">
+			<item-list class="col-xs-8 offset-md-2" items="vm.items">
+				<header><h2>{{vm.caption}}</h2></header>
+				<footer><small>List Items Count: {{vm.items.length}}</small></footer>
+			</item-list>
+		</main>
+		<script>
+
+			angular.module("ColorToolApp", [])
+				.component("itemList", {
+					transclude: {
+						header: 'header',
+						footer: 'footer',
+					},
+					bindings: {
+						items: '<'
+					},
+					template: `
+						<ng-transclude ng-transclude-slot="header"></ng-transclude>
+						<ul>
+							<li ng-repeat="item in $ctrl.items">{{item}}</li>
+						</ul>
+						<ng-transclude ng-transclude-slot="footer"></ng-transclude>
+					`,
+					controller: function() {
+
+					}
+				})
+				.controller("AppCtrl", function() {
+					var vm = this;
+					vm.caption = 'Color List';
+					vm.items = ['red','blue','yellow'];
+				});
+
+		</script>
+	</body>
+
+</html>

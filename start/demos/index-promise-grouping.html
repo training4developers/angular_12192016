@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Welcome to Angular.js Class!</title>
+		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/site.css" rel="stylesheet">
+		<base href="/">
+		<!--<script src="js/jquery/jquery-3.1.1.min.js"></script>
+		<script src="js/ng/angular.min.js"></script>-->
+	</head>
+
+	<body class="container-fluid">
+		<script>
+
+			// var p1 = new Promise(function(resolve) {
+			// 	setTimeout(function() {
+			// 		resolve()
+			// 	}, 2000);
+			// });
+
+			const p1 = $q(resolve => setTimeout(() => resolve('a'), 2000));
+			const p2 = $q(resolve => setTimeout(() => resolve('b'), 4000));
+			const p3 = $q((resolve, reject) => setTimeout(() => reject('c'), 6000));
+			const p4 = $q(resolve => setTimeout(() => resolve('d'), 8000));
+
+			p1.then(results => console.log(1,results));
+			p1.then(results => console.log(2,results));
+			p2.then(results => console.log(results));
+			p3.then(results => console.log(results)).catch(results => console.log('rejected',results));
+			p4.then(results => console.log(results));
+
+			const p5 = $q.all([p1,p2]).then(function(results) {
+				console.log(results);
+			});
+
+			$q.all([p5,p3,p4]).then(function() {
+				console.log(arguments);
+				console.log('all resolved');
+			}).catch(function(results) {
+				console.log(results);
+				console.log('one failed');
+			});
+
+
+
+		</script>
+	</body>
+
+</html>

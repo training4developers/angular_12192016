@@ -10,45 +10,11 @@
 		<base href="/">
 		<script src="js/jquery/jquery-3.1.1.min.js"></script>
 		<script src="js/ng/angular.min.js"></script>
-		<style>
-
-			input.ng-invalid.ng-touched {
-				border: 2px solid red;
-			}
-
-			input.ng-invalid.ng-touched + span {
-				display: inline;
-			}
-
-			input.ng-untouched + span {
-				display: none;
-			}
-
-		</style>
 	</head>
 
 	<body class="container-fluid">
 		<main ng-app="MyApp">
-			<div ng-controller="MyCtrl">
-
-				<form novalidate name="demoForm">
-
-					<div>
-						<label for="first-name">First Name</label>
-						<input type="text" id="first-name" name="firstName" ng-model="person.firstName" required>
-						<span ng-show="demoForm.firstName.$invalid && demoForm.firstName.$touched">Please enter a first name.</span>
-					</div>
-
-					<div>
-						<label for="last-name">Last Name</label>
-						<input type="text" id="last-name" name="lastName" ng-model="person.lastName" required>
-						<span>Please enter a last name.</span>
-					</div>
-
-				</form>
-
-
-			</div>
+			<div ng-controller="MyCtrl"></div>
 		</main>
 		<script>
 
