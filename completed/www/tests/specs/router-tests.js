@@ -2,14 +2,13 @@ describe("app router", function() {
 
 	"use strict";
 
-	var stateSvc, rootScopeSvc, httpBackendSvc;
+	var stateSvc, rootScopeSvc;
 
 	beforeEach(angular.mock.module("WidgetApp"));
 
-	beforeEach(angular.mock.inject(function($state, $rootScope, $httpBackend) {
+	beforeEach(angular.mock.inject(function($state, $rootScope) {
 		stateSvc = $state;
 		rootScopeSvc = $rootScope;
-		httpBackendSvc =  $httpBackend;
 	}));
 
 	it("home state configuration", function() {
@@ -18,8 +17,7 @@ describe("app router", function() {
 
 		expect(stateConfig.name).toEqual("home");
 		expect(stateConfig.url).toEqual("/");
-		expect(stateConfig.controller).toEqual("homeCtrl");
-		expect(stateConfig.templateUrl).toEqual("tpls/home.html");
+		expect(stateConfig.template).toEqual("<app-home></app-home>");
 
 	});
 
@@ -29,8 +27,7 @@ describe("app router", function() {
 
 		expect(stateConfig.name).toEqual("create");
 		expect(stateConfig.url).toEqual("/widgets/create");
-		expect(stateConfig.controller).toEqual("widgetEditCtrl");
-		expect(stateConfig.templateUrl).toEqual("tpls/widget-edit.html");
+		expect(stateConfig.template).toEqual("<widget-edit></widget-edit>");
 
 	});
 
@@ -40,8 +37,7 @@ describe("app router", function() {
 
 		expect(stateConfig.name).toEqual("view");
 		expect(stateConfig.url).toEqual("/widgets/:widgetId");
-		expect(stateConfig.controller).toEqual("widgetViewCtrl");
-		expect(stateConfig.templateUrl).toEqual("tpls/widget-view.html");
+		expect(stateConfig.template).toEqual("<widget-view></widget-view>");
 
 	});
 
@@ -51,8 +47,7 @@ describe("app router", function() {
 
 		expect(stateConfig.name).toEqual("edit");
 		expect(stateConfig.url).toEqual("/widgets/:widgetId/edit");
-		expect(stateConfig.controller).toEqual("widgetEditCtrl");
-		expect(stateConfig.templateUrl).toEqual("tpls/widget-edit.html");
+		expect(stateConfig.template).toEqual("<widget-edit></widget-edit>");
 
 	});
 
@@ -78,106 +73,63 @@ describe("app router", function() {
 
 	describe("goto state", function() {
 
-		beforeEach(function() {
-
-			httpBackendSvc.expectGET("tpls/home.html", {
-				"Accept":"text/html"
-			}).respond("Home HTML Template");
-
-			httpBackendSvc.flush();
-
-		});
-
-		it("change to home state", function() {
+		it("change to home state", function(done) {
 
 			stateSvc.go("home").then(function() {
 
 				expect(stateSvc.current.name).toEqual("home");
 				expect(stateSvc.current.url).toEqual("/");
-				expect(stateSvc.current.templateUrl).toEqual("tpls/home.html");
-				expect(stateSvc.current.controller).toEqual("homeCtrl");
-
-				angular.mock.inject(function($templateCache) {
-					expect($templateCache.get(stateSvc.current.templateUrl)[1]).toEqual("Home HTML Template");
-				});
+				expect(stateSvc.current.template).toEqual("<app-home></app-home>");
+				done();
 
 			});
 
+			rootScopeSvc.$digest();
+
 		});
 
-		it("change to widget create state", function() {
-
-			httpBackendSvc
-				.expectGET("tpls/widget-edit.html")
-				.respond("Widget Edit HTML Template");
+		it("change to widget create state", function(done) {
 
 			stateSvc.go("create").then(function() {
 
 				expect(stateSvc.current.name).toEqual("create");
 				expect(stateSvc.current.url).toEqual("/widgets/create");
-				expect(stateSvc.current.templateUrl).toEqual("tpls/widget-edit.html");
-				expect(stateSvc.current.controller).toEqual("widgetEditCtrl");
-
-				angular.mock.inject(function($templateCache) {
-					expect($templateCache.get(stateSvc.current.templateUrl)[1]).toEqual("Widget Edit HTML Template");
-				});
+				expect(stateSvc.current.template).toEqual("<widget-edit></widget-edit>");
+				done();
 
 			});
 
-			httpBackendSvc.flush();
+			rootScopeSvc.$digest();
 
 		});
 
-		it("change to widget view state", function() {
-
-			httpBackendSvc
-				.expectGET("tpls/widget-view.html")
-				.respond("Widget View HTML Template");
+		it("change to widget view state", function(done) {
 
 			stateSvc.go("view", { widgetId: 1 }).then(function() {
 
 				expect(stateSvc.current.name).toEqual("view");
 				expect(stateSvc.current.url).toEqual("/widgets/:widgetId");
-				expect(stateSvc.current.templateUrl).toEqual("tpls/widget-view.html");
-				expect(stateSvc.current.controller).toEqual("widgetViewCtrl");
-
-				angular.mock.inject(function($templateCache) {
-					expect($templateCache.get(stateSvc.current.templateUrl)[1]).toEqual("Widget View HTML Template");
-				});
+				expect(stateSvc.current.template).toEqual("<widget-view></widget-view>");
+				done();
 
 			});
 
-			httpBackendSvc.flush();
+			rootScopeSvc.$digest();
 
 		});
 
-		it("change to widget edit state", function() {
-
-			httpBackendSvc
-				.expectGET("tpls/widget-edit.html")
-				.respond("Widget Edit HTML Template");
+		it("change to widget edit state", function(done) {
 
 			stateSvc.go("edit", { widgetId: 1 }).then(function() {
 
 				expect(stateSvc.current.name).toEqual("edit");
 				expect(stateSvc.current.url).toEqual("/widgets/:widgetId/edit");
-				expect(stateSvc.current.templateUrl).toEqual("tpls/widget-edit.html");
-				expect(stateSvc.current.controller).toEqual("widgetEditCtrl");
-
-				angular.mock.inject(function($templateCache) {
-					expect($templateCache.get(stateSvc.current.templateUrl)[1]).toEqual("Widget Edit HTML Template");
-				});
+				expect(stateSvc.current.template).toEqual("<widget-edit></widget-edit>");
+				done();
 
 			});
 
-			httpBackendSvc.flush();
-
-		});
-
-		afterEach(function() {
-
-			httpBackendSvc.verifyNoOutstandingExpectation();
-			httpBackendSvc.verifyNoOutstandingRequest();
+			rootScopeSvc.$digest();
 
 		});
 

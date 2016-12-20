@@ -1,6 +1,6 @@
 describe("widget view controller", function() {
 
-	var mockScope;
+	var mockScope, widgetViewCtrl;
 
 	beforeEach(angular.mock.module("WidgetApp"));
 
@@ -8,7 +8,7 @@ describe("widget view controller", function() {
 
 		mockScope = $rootScope.$new();
 
-		$controller("widgetViewCtrl", {
+		widgetViewCtrl = $controller("widgetViewCtrl", {
 			$scope: mockScope
 		});
 

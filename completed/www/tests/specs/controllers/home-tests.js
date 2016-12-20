@@ -2,7 +2,7 @@ describe("home controller", function() {
 
 	"use strict";
 
-	var mockScope, widgetsSvc, stateSvc, controllerSvc;
+	var mockScope, widgetsSvc, stateSvc, controllerSvc, homeCtrl;
 
 	beforeEach(angular.mock.module("WidgetApp"));
 
@@ -30,7 +30,7 @@ describe("home controller", function() {
 
 		spyOn(stateSvc, "go");
 
-		controllerSvc("homeCtrl", {
+		homeCtrl = controllerSvc("homeCtrl", {
 			$scope: mockScope,
 			widgets: widgetsSvc,
 			$state: stateSvc
@@ -40,9 +40,11 @@ describe("home controller", function() {
 
 	it("load widgets", function(done) {
 
+		homeCtrl.$onInit();
+
 		setTimeout(function() {
 			expect(widgetsSvc.getAll).toHaveBeenCalled();
-			expect(mockScope.widgets.length).toBe(1);
+			expect(homeCtrl.widgets.length).toBe(1);
 			done();
 		}, 0);
 
@@ -50,21 +52,21 @@ describe("home controller", function() {
 
 	it("view widget", function() {
 
-		mockScope.viewWidget(1);
+		homeCtrl.viewWidget(1);
 		expect(stateSvc.go).toHaveBeenCalledWith("view", { widgetId: 1 });
 
 	});
 
 	it("edit widget", function() {
 
-		mockScope.editWidget(1);
+		homeCtrl.editWidget(1);
 		expect(stateSvc.go).toHaveBeenCalledWith("edit", { widgetId: 1 });
 
 	});
 
 	it("create widget", function() {
 
-		mockScope.createWidget();
+		homeCtrl.createWidget();
 		expect(stateSvc.go).toHaveBeenCalledWith("create");
 
 	});

@@ -8,8 +8,8 @@
 
 		var vm = this;
 		
-		vm.$onInit = function() {		
-		
+		vm.$onInit = function() {
+
 			widgets.getAll().then(function(results) {
 				vm.widgets = results.data;
 			});
